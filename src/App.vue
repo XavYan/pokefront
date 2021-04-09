@@ -134,10 +134,12 @@ button {
 }
 
 .pokecarts {
-  // display: flex;
-  // justify-content: space-between;
-  // flex-wrap: wrap;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+
+  @media screen and (max-width: 1024px) {
+    // display: flex;
+    grid-template-columns: 1fr;
+  }
 }
 </style>
