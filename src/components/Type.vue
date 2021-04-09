@@ -40,7 +40,7 @@ export default {
     text-transform: capitalize;
     padding: 2px 15px;
     font-size: 10px;
-    border-radius: 17%;
+    border-radius: 10px;
     color: white;
   }
 
