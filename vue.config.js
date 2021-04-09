@@ -1,3 +1,5 @@
 module.exports = {
-  publicPath: '/pokefront/'
+  publicPath: process.env.NODE_ENV === 'production'
+    ? '/pokefront/'
+    : '/'
 }
