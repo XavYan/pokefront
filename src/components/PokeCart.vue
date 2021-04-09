@@ -25,20 +25,18 @@ export default {
 </script>
 
 <style lang="scss">
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;400&display=swap');
-
   .container {
+    background-color: white;
+
     border-radius: 5%;
     box-shadow: rgba(99, 99, 99, 0.2) 0 2px 8px 0;
     width: 220px;
     height: 300px;
-    margin: 10px;
+    margin: 10px 20px 10px 0;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-
-    font-family: 'Noto Sans TC', sans-serif;
 
     transition: all .1s linear;
     cursor: pointer;
