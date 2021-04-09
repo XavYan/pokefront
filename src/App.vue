@@ -2,18 +2,13 @@
   <div id="app">
     <Header/>
     <div class="body">
-      <h1>Pokémon List</h1>
+      <h2>Filters</h2>
       <div class="id-forms">
-        <div class="fid-form">
-          <label for="initialId">Initial shown ID</label>
-          <input type="number" id="initialId">
-        </div>
-        <div class="fid-form">
-          <label for="finalId">Last shown ID</label>
-          <input type="number" id="finalId">
-        </div>
+        <input-id v-model="tempInitialId" title="Initial shown ID"/>
+        <input-id v-model="tempFinalId" title="Last shown ID"/>
         <button type="button" @click="reloadWithNewIds">Apply</button>
       </div>
+      <h1>Pokémon List</h1>
       <p>{{ initialId }} - {{ finalId }}</p>
       <div class="pokecarts">
         <poke-cart v-for="(pokemon, index) in pokemons" :key="index" :id="pokemon.id" :name="pokemon.name" :types="pokemon.types" :image="pokemon.image"/>
@@ -24,6 +19,7 @@
 
 <script>
 import Header from './components/Header.vue'
+import InputId from './components/InputId.vue'
 import PokeCart from './components/PokeCart.vue'
 
 const API_PATH = 'https://pokeapi.co/api/v2/'
@@ -32,12 +28,15 @@ export default {
   name: 'App',
   components: {
     Header,
-    PokeCart
+    PokeCart,
+    InputId
   },
   data () {
     return {
       initialId: 1,
       finalId: 50,
+      tempInitialId: 0,
+      tempFinalId: 0,
       pokemons: []
     }
   },
@@ -59,18 +58,15 @@ export default {
       }
     },
     reloadWithNewIds () {
-      const fid = document.querySelector('#finalId').value
-      const iid = document.querySelector('#initialId').value
-
       let changed = false
 
-      if (fid && this.finalId !== fid) {
-        this.finalId = fid
+      if (this.tempFinalId && this.finalId !== this.tempFinalId) {
+        this.finalId = this.tempFinalId
         changed = true
       }
 
-      if (iid && this.initialId !== iid) {
-        this.initialId = iid
+      if (this.tempInitialId && this.initialId !== this.tempInitialId) {
+        this.initialId = this.tempInitialId
         changed = true
       }
 
@@ -79,10 +75,8 @@ export default {
   },
   created () {
     this.loadPokeCarts()
-  },
-  mounted () {
-    document.querySelector('#initialId').value = this.initialId
-    document.querySelector('#finalId').value = this.finalId
+    this.tempInitialId = this.initialId
+    this.tempFinalId = this.finalId
   }
 }
 </script>
@@ -112,7 +106,7 @@ body {
   align-items: center;
 }
 
-h1 {
+h1, h2 {
   align-self: flex-start;
   text-transform: uppercase;
   margin-bottom: 0;
@@ -123,16 +117,6 @@ h1 {
   align-self: flex-start;
   display: flex;
   flex-direction: column;
-}
-
-.fid-form {
-  display: flex;
-  flex-direction: column;
-}
-
-.fid-form input {
-  margin: 5px 10px 5px 0;
-  padding: 4px;
 }
 
 button {
