@@ -20,7 +20,7 @@ export default {
     height: 50px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    // justify-content: space-between;
     padding: 0 50px;
 
     color: #1D3557;

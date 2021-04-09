@@ -14,6 +14,7 @@
         </div>
         <button type="button" @click="reloadWithNewIds">Apply</button>
       </div>
+      <p>{{ initialId }} - {{ finalId }}</p>
       <div class="pokecarts">
         <poke-cart v-for="(pokemon, index) in pokemons" :key="index" :id="pokemon.id" :name="pokemon.name" :types="pokemon.types" :image="pokemon.image"/>
       </div>
