@@ -40,6 +40,8 @@ export default {
 
     transition: all .1s linear;
     cursor: pointer;
+
+    align-self: center;
   }
 
   .container:hover {

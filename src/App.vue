@@ -4,8 +4,8 @@
     <div class="body">
       <h2>Filters</h2>
       <div class="id-forms">
-        <input-id v-model="tempInitialId" title="Initial shown ID"/>
-        <input-id v-model="tempFinalId" title="Last shown ID"/>
+        <input-id v-model.number="tempInitialId" title="Initial shown ID"/>
+        <input-id v-model.number="tempFinalId" title="Last shown ID"/>
         <button type="button" @click="reloadWithNewIds">Apply</button>
       </div>
       <h1>Pokémon List</h1>
@@ -14,11 +14,13 @@
         <poke-cart v-for="(pokemon, index) in pokemons" :key="index" :id="pokemon.id" :name="pokemon.name" :types="pokemon.types" :image="pokemon.image"/>
       </div>
     </div>
+    <Footer/>
   </div>
 </template>
 
 <script>
 import Header from './components/Header.vue'
+import Footer from './components/Footer.vue'
 import InputId from './components/InputId.vue'
 import PokeCart from './components/PokeCart.vue'
 
@@ -29,7 +31,8 @@ export default {
   components: {
     Header,
     PokeCart,
-    InputId
+    InputId,
+    Footer
   },
   data () {
     return {
@@ -95,21 +98,20 @@ body {
   margin: auto;
   max-width: 1200px;
   background-color: white;
-  padding-bottom: 50px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .body {
-  padding: 0 50px;
+  padding: 0 50px 50px 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
 
-h1, h2 {
-  align-self: flex-start;
-  text-transform: uppercase;
-  margin-bottom: 0;
+  & > h1, & > h2 {
+    align-self: flex-start;
+    text-transform: uppercase;
+    margin-bottom: 0;
+  }
 }
 
 .id-forms {
@@ -132,8 +134,10 @@ button {
 }
 
 .pokecarts {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  // display: flex;
+  // justify-content: space-between;
+  // flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
 }
 </style>

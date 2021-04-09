@@ -1,7 +1,6 @@
 <template>
   <div class="header">
     <logo/>
-    <!-- <font-awesome-icon class="menu-icon" :icon="['fas', 'chevron-circle-down']" /> -->
   </div>
 </template>
 
@@ -15,18 +14,13 @@ export default {
 </script>
 
 <style lang="scss">
-  .header {
-    background-color: #264653;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    // justify-content: space-between;
-    padding: 0 50px;
+.header {
+  background-color: #264653;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  padding: 0 50px;
 
-    color: #1D3557;
-
-    .menu-icon {
-      font-size: 30px;
-    }
-  }
+  color: #1D3557;
+}
 </style>
