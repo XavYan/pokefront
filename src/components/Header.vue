@@ -1,13 +1,16 @@
 <template>
   <div class="header">
-    <p class="title"><i>Poké</i><span>Front</span></p>
+    <logo/>
     <!-- <font-awesome-icon class="menu-icon" :icon="['fas', 'chevron-circle-down']" /> -->
   </div>
 </template>
 
 <script>
-export default {
+import Logo from './Logo.vue'
 
+export default {
+  name: 'Header',
+  components: { Logo }
 }
 </script>
 
@@ -24,21 +27,6 @@ export default {
 
     .menu-icon {
       font-size: 30px;
-    }
-
-    .title {
-      margin: 0;
-      font-size: 25px;
-      font-weight: 400;
-
-      i {
-        margin-right: 3px;
-        color: white;
-      }
-
-      span {
-        color: #F4A261;
-      }
     }
   }
 </style>
