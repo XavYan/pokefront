@@ -3,11 +3,11 @@
     <Header/>
     <div class="body">
       <h2>Filters</h2>
-      <div class="id-forms">
+      <form class="id-forms">
         <input-id v-model.number="tempInitialId" title="Initial shown ID"/>
         <input-id v-model.number="tempFinalId" title="Last shown ID"/>
-        <button type="button" @click="reloadWithNewIds">Apply</button>
-      </div>
+        <button type="submit" @click="reloadWithNewIds($event)">Apply</button>
+      </form>
       <h1>Pokémon List</h1>
       <p>{{ initialId }} - {{ finalId }}</p>
       <div class="pokecarts">
@@ -60,7 +60,9 @@ export default {
         })
       }
     },
-    reloadWithNewIds () {
+    reloadWithNewIds (event) {
+      event.preventDefault()
+
       let changed = false
 
       if (this.tempInitialId && this.tempInitialId > 0 && this.initialId !== this.tempInitialId) {
