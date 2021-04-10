@@ -65,12 +65,13 @@ export default {
 
       if (this.tempInitialId && this.tempInitialId > 0 && this.initialId !== this.tempInitialId) {
         this.initialId = this.tempInitialId
-        if (this.initialId > this.finalId) {
+        if (this.initialId > this.tempFinalId) {
           this.finalId = this.initialId
           this.tempFinalId = this.initialId
         }
         changed = true
       }
+      console.log('Valor de initialId: ' + this.initialId)
 
       if (this.tempFinalId && this.tempFinalId > 0 && this.finalId !== this.tempFinalId) {
         this.finalId = this.initialId > this.tempFinalId ? this.initialId : this.tempFinalId
