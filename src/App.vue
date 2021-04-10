@@ -63,13 +63,18 @@ export default {
     reloadWithNewIds () {
       let changed = false
 
-      if (this.tempFinalId && this.finalId !== this.tempFinalId) {
-        this.finalId = this.tempFinalId
+      if (this.tempInitialId && this.tempInitialId > 0 && this.initialId !== this.tempInitialId) {
+        this.initialId = this.tempInitialId
+        if (this.initialId > this.finalId) {
+          this.finalId = this.initialId
+          this.tempFinalId = this.initialId
+        }
         changed = true
       }
 
-      if (this.tempInitialId && this.initialId !== this.tempInitialId) {
-        this.initialId = this.tempInitialId
+      if (this.tempFinalId && this.tempFinalId > 0 && this.finalId !== this.tempFinalId) {
+        this.finalId = this.initialId > this.tempFinalId ? this.initialId : this.tempFinalId
+        this.tempFinalId = this.finalId
         changed = true
       }
 
@@ -138,7 +143,6 @@ button {
   grid-template-columns: repeat(4, 1fr);
 
   @media screen and (max-width: 1024px) {
-    // display: flex;
     grid-template-columns: 1fr;
   }
 }
