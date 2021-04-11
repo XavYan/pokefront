@@ -26,8 +26,8 @@
       </div>
       <h1>Pokémon List</h1>
       <p>{{ initialId }} - {{ finalId }}</p>
-      <div class="pokecarts">
-        <poke-cart
+      <div class="pokecards">
+        <poke-card
           v-for="(pokemon, index) in pokemons"
           :id="pokemon.id"
           :key="index"
@@ -45,7 +45,7 @@
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
 import InputId from './components/InputId.vue'
-import PokeCart from './components/PokeCart.vue'
+import PokeCard from './components/PokeCard.vue'
 
 const API_PATH = 'https://pokeapi.co/api/v2/'
 
@@ -53,7 +53,7 @@ export default {
   name: 'App',
   components: {
     Header,
-    PokeCart,
+    PokeCard,
     InputId,
     Footer
   },
@@ -210,7 +210,7 @@ body {
   }
 }
 
-.pokecarts {
+.pokecards {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 

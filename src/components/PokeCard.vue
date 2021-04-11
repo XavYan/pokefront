@@ -1,25 +1,47 @@
 <template>
-    <div class="container">
-      <strong class="pokemon-id">#{{ id }}</strong>
-      <h2 class="pokemon-name">{{ name }}</h2>
-      <img class="pokemon-image" :src="image" alt="pokemon image">
-      <div class="pokemon-types">
-        <type v-for="(type, index) in types" :key="index" :name="type"/>
-      </div>
+  <div class="container">
+    <strong class="pokemon-id">#{{ id }}</strong>
+    <h2 class="pokemon-name">
+      {{ name }}
+    </h2>
+    <img
+      class="pokemon-image"
+      :src="image"
+      alt="pokemon image"
+    >
+    <div class="pokemon-types">
+      <type
+        v-for="(type, index) in types"
+        :key="index"
+        :name="type"
+      />
     </div>
+  </div>
 </template>
 
 <script>
 import Type from './Type.vue'
 
 export default {
+  name: 'PokeCard',
   components: { Type },
-  name: 'PokeCart',
   props: {
-    id: Number,
-    name: String,
-    image: String,
-    types: Array
+    id: {
+      type: Number,
+      required: true
+    },
+    name: {
+      type: String,
+      required: true
+    },
+    image: {
+      type: String,
+      required: true
+    },
+    types: {
+      type: Array,
+      required: true
+    }
   }
 }
 </script>
