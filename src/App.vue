@@ -102,12 +102,14 @@ export default {
     nextPage () {
       if (this.offset < this.count) {
         this.offset += this.limit
+        if (this.offset > this.count) this.offset = this.count
         this.fetchPokemons(this.offset, this.limit)
       }
     },
     previousPage () {
       if (this.offset > 0) {
         this.offset -= this.limit
+        if (this.offset < 0) this.offset = 0
         this.fetchPokemons(this.offset, this.limit)
       }
     },
