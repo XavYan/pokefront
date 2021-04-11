@@ -26,21 +26,30 @@ export default {
   name: 'PokeCard',
   components: { Type },
   props: {
-    id: {
-      type: Number,
-      required: true
-    },
-    name: {
+    src: {
       type: String,
       required: true
-    },
-    image: {
-      type: String,
-      required: true
-    },
-    types: {
-      type: Array,
-      required: true
+    }
+  },
+  data () {
+    return {
+      id: 0,
+      name: '',
+      image: '',
+      types: []
+    }
+  },
+  async created () {
+    const data = await this.fetchUrl()
+    this.id = data.id
+    this.name = data.name
+    this.image = data.sprites.front_default
+    this.types = data.types.map(slot => slot.type.name)
+  },
+  methods: {
+    fetchUrl () {
+      return fetch(this.src)
+        .then(res => res.json())
     }
   }
 }

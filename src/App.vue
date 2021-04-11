@@ -29,11 +29,8 @@
       <div class="pokecards">
         <poke-card
           v-for="(pokemon, index) in pokemons"
-          :id="pokemon.id"
           :key="index"
-          :name="pokemon.name"
-          :types="pokemon.types"
-          :image="pokemon.image"
+          :src="pokemon"
         />
       </div>
     </div>
@@ -47,7 +44,7 @@ import Footer from './components/Footer.vue'
 import InputId from './components/InputId.vue'
 import PokeCard from './components/PokeCard.vue'
 
-const API_PATH = 'https://pokeapi.co/api/v2/'
+const API_PATH = 'https://pokeapi.co/api/v2'
 
 export default {
   name: 'App',
@@ -76,16 +73,10 @@ export default {
       return fetch(API_PATH + endpoint + '/')
         .then(res => res.json())
     },
-    async loadPokeCarts () {
+    loadPokeCarts () {
       this.pokemons = []
       for (let id = this.initialId; id <= this.finalId; id++) {
-        const data = await this.fetchAPI('pokemon/' + id)
-        this.pokemons.push({
-          id: data.id,
-          name: data.name,
-          image: data.sprites.front_default,
-          types: data.types.map(slot => slot.type.name)
-        })
+        this.pokemons.push(API_PATH + '/pokemon/' + id)
       }
     },
     reloadWithNewIds (event) {
