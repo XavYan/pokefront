@@ -63,7 +63,6 @@ export default {
     box-shadow: rgba(99, 99, 99, 0.2) 0 2px 8px 0;
     width: 220px;
     height: 300px;
-    margin: 10px 20px 10px 0;
     display: flex;
     flex-direction: column;
     justify-content: space-around;

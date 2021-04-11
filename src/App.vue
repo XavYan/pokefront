@@ -2,36 +2,57 @@
   <div id="app">
     <Header />
     <div class="body">
-      <h2>Filters</h2>
-      <div class="filters">
-        <div class="filter ids">
-          <p>IDs</p>
-          <form class="id-forms">
-            <input-id
-              v-model.number="tempInitialId"
-              title="Initial shown ID"
-            />
-            <input-id
-              v-model.number="tempFinalId"
-              title="Last shown ID"
-            />
+      <h1>Pokédex</h1>
+      <div class="pagination">
+        <div class="pagination-control">
+          <div>
+            <div class="pagination-arrows">
+              <button
+                type="button"
+                @click="previousPage"
+              >
+                <font-awesome-icon :icon="['fas', 'chevron-left']" />
+              </button>
+              <button
+                type="button"
+                @click="nextPage"
+              >
+                <font-awesome-icon :icon="['fas', 'chevron-right']" />
+              </button>
+            </div>
+            <div class="pagination-index">
+              {{ offset + 1 }} - {{ offset + limit }}
+            </div>
+          </div>
+          <div class="pagination-limit">
             <button
-              type="submit"
-              @click="reloadWithNewIds($event)"
+              type="button"
+              class="limit-active"
+              @click="setNewActiveLimit"
             >
-              Apply
+              20
             </button>
-          </form>
+            <button
+              type="button"
+              @click="setNewActiveLimit"
+            >
+              50
+            </button>
+            <button
+              type="button"
+              @click="setNewActiveLimit"
+            >
+              100
+            </button>
+          </div>
         </div>
-      </div>
-      <h1>Pokémon List</h1>
-      <p>{{ initialId }} - {{ finalId }}</p>
-      <div class="pokecards">
-        <poke-card
-          v-for="(pokemon, index) in pokemons"
-          :key="index"
-          :src="pokemon"
-        />
+        <div class="pokecards">
+          <poke-card
+            v-for="(pokemon, index) in pokemons"
+            :key="index"
+            :src="pokemon"
+          />
+        </div>
       </div>
     </div>
     <Footer />
@@ -41,7 +62,6 @@
 <script>
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
-import InputId from './components/InputId.vue'
 import PokeCard from './components/PokeCard.vue'
 
 const API_PATH = 'https://pokeapi.co/api/v2'
@@ -51,55 +71,53 @@ export default {
   components: {
     Header,
     PokeCard,
-    InputId,
     Footer
   },
   data () {
     return {
-      initialId: 1,
-      finalId: 50,
-      tempInitialId: 0,
-      tempFinalId: 0,
-      pokemons: []
+      pokemons: [],
+      count: 1118,
+      offset: 0,
+      limit: 20
     }
   },
-  created () {
-    this.loadPokeCarts()
-    this.tempInitialId = this.initialId
-    this.tempFinalId = this.finalId
+  mounted () {
+    this.fetchPokemons(this.offset, this.limit)
   },
   methods: {
     fetchAPI (endpoint) {
-      return fetch(API_PATH + endpoint + '/')
+      return fetch(API_PATH + endpoint)
         .then(res => res.json())
     },
-    loadPokeCarts () {
+    fetchPokemons (offset, limit) {
+      document.querySelector('.pokecards').classList.add('loading')
       this.pokemons = []
-      for (let id = this.initialId; id <= this.finalId; id++) {
-        this.pokemons.push(API_PATH + '/pokemon/' + id)
+      this.fetchAPI(`/pokemon?offset=${offset}&limit=${limit}`)
+        .then(res => res.results.map(pokemon => pokemon.url))
+        .then(pokemons => {
+          this.pokemons = pokemons
+        })
+      document.querySelector('.pokecards').classList.remove('loading')
+    },
+    nextPage () {
+      if (this.offset < this.count) {
+        this.offset += this.limit
+        this.fetchPokemons(this.offset, this.limit)
       }
     },
-    reloadWithNewIds (event) {
-      event.preventDefault()
-
-      let changed = false
-
-      if (this.tempInitialId && this.tempInitialId > 0 && this.initialId !== this.tempInitialId) {
-        this.initialId = this.tempInitialId
-        if (this.initialId > this.tempFinalId) {
-          this.finalId = this.initialId
-          this.tempFinalId = this.initialId
-        }
-        changed = true
+    previousPage () {
+      if (this.offset > 0) {
+        this.offset -= this.limit
+        this.fetchPokemons(this.offset, this.limit)
       }
-
-      if (this.tempFinalId && this.tempFinalId > 0 && this.finalId !== this.tempFinalId) {
-        this.finalId = this.initialId > this.tempFinalId ? this.initialId : this.tempFinalId
-        this.tempFinalId = this.finalId
-        changed = true
+    },
+    setNewActiveLimit (event) {
+      if (!event.target.classList.contains('limit-active')) {
+        this.limit = parseInt(event.target.textContent)
+        document.querySelector('.limit-active').classList.remove('limit-active')
+        event.target.classList.add('limit-active')
+        this.fetchPokemons(this.offset, this.limit)
       }
-
-      if (changed) this.loadPokeCarts()
     }
   }
 }
@@ -152,7 +170,6 @@ body {
   padding: 0 50px 50px 50px;
   display: flex;
   flex-direction: column;
-  align-items: center;
 
   & > h1, & > h2 {
     align-self: flex-start;
@@ -165,45 +182,68 @@ body {
   }
 }
 
-.filters {
-  align-self: flex-start;
-  display: flex;
+.pagination {
 
-  @media screen and (max-width: 512px) {
-    flex-direction: column;
-  }
-
-  .filter {
-    min-height: 300px;
-    margin: 10px;
-    padding: 5px 30px 20px 30px;
-    border-radius: 5px;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
-  }
-
-  .id-forms {
-    padding: 20px 0;
-    align-self: flex-start;
+  .pagination-control {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
 
-    button {
-      margin-top: 5px;
-      padding: 4px 12px;
-      font-size: 14px;
-      width: 75px;
-      background-color: rgb(23, 162, 184);
-      border: 1px solid rgb(23, 162, 184);
-      border-radius: 4px;
-      color: white;
-      cursor: pointer;
+    .pagination-index {
+      padding: 20px;
+    }
+
+    div:first-of-type {
+      display: flex;
+      align-items: center;
+    }
+
+    .pagination-arrows, .pagination-limit {
+      padding: 0;
+      margin: 20px 0;
+
+      display: flex;
+      list-style: none;
+
+      & > button {
+        padding: 7px 12px;
+        border: 0;
+        background-color: white;
+        box-shadow: rgba(0, 0, 0, 0.2) 0 1px 4px;
+        color: #202020;
+        font-size: 15px;
+        text-align: center;
+        cursor: pointer;
+
+        margin: 0 2px;
+
+        &:first-child {
+          border-top-left-radius: 7px;
+          border-bottom-left-radius: 7px;
+          margin-left: 0;
+        }
+
+        &:last-child {
+          border-top-right-radius: 7px;
+          border-bottom-right-radius: 7px;
+          margin-right: 0;
+        }
+
+        &:hover, &.limit-active {
+          background-color: #205046;
+          color: blanchedalmond;
+        }
+      }
     }
   }
 }
 
 .pokecards {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, auto);
+  align-items: center;
+  grid-gap: 2rem;
+  justify-content: center;
 
   @media screen and (max-width: 1024px) {
     grid-template-columns: repeat(3, 1fr);
@@ -217,6 +257,23 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+  }
+}
+
+.loading::before {
+  content: '';
+  width: 50px;
+  height: 50px;
+  border: 8px solid #EDF6F9;
+  border-radius: 50%;
+  border-left-color: #83C5BE;
+
+  animation: spin .6s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
   }
 }
 </style>
