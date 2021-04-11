@@ -5,6 +5,12 @@
         <div class="pagination-arrows">
           <button
             type="button"
+            @click="startPage"
+          >
+            <font-awesome-icon :icon="['fas', 'angle-double-left']" />
+          </button>
+          <button
+            type="button"
             @click="previousPage"
           >
             <font-awesome-icon :icon="['fas', 'chevron-left']" />
@@ -14,6 +20,12 @@
             @click="nextPage"
           >
             <font-awesome-icon :icon="['fas', 'chevron-right']" />
+          </button>
+          <button
+            type="button"
+            @click="finalPage"
+          >
+            <font-awesome-icon :icon="['fas', 'angle-double-right']" />
           </button>
         </div>
         <div class="pagination-index">
@@ -106,6 +118,12 @@ export default {
         })
       document.querySelector('.pokecards').classList.remove('loading')
     },
+    startPage () {
+      if (this.appliedOffset !== 0) {
+        this.appliedOffset = 0
+        this.fetchPokemons()
+      }
+    },
     nextPage () {
       if (this.appliedOffset < this.count) {
         this.appliedOffset += this.appliedLimit
@@ -117,6 +135,12 @@ export default {
       if (this.appliedOffset > 0) {
         this.appliedOffset -= this.appliedLimit
         if (this.appliedOffset < 0) this.appliedOffset = 0
+        this.fetchPokemons()
+      }
+    },
+    finalPage () {
+      if (this.appliedOffset !== (this.count - this.appliedLimit)) {
+        this.appliedOffset = this.count - this.appliedLimit
         this.fetchPokemons()
       }
     },
