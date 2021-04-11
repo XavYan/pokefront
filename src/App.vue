@@ -101,7 +101,6 @@ export default {
         }
         changed = true
       }
-      console.log('Valor de initialId: ' + this.initialId)
 
       if (this.tempFinalId && this.tempFinalId > 0 && this.finalId !== this.tempFinalId) {
         this.finalId = this.initialId > this.tempFinalId ? this.initialId : this.tempFinalId
