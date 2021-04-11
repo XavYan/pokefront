@@ -1,7 +1,12 @@
 <template>
   <div class="id-form">
     <label>{{ title }}</label>
-    <input type="number" min="1" @input="$emit('input', $event.target.value)" :value="value">
+    <input
+      type="number"
+      min="1"
+      :value="value"
+      @input="$emit('input', $event.target.value)"
+    >
   </div>
 </template>
 
@@ -15,7 +20,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .id-form {
   display: flex;
   flex-direction: column;

@@ -19,7 +19,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .type {
   text-transform: capitalize;
   padding: 2px 15px;

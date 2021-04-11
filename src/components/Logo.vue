@@ -1,5 +1,7 @@
 <template>
-  <p class="title"><i>Poké</i><span>Front</span></p>
+  <p class="title">
+    <i>Poké</i><span>Front</span>
+  </p>
 </template>
 
 <script>
@@ -8,7 +10,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .title {
   margin: 0;
   font-size: 25px;
