@@ -14,8 +14,14 @@
 export default {
   name: 'InputId',
   props: {
-    title: String,
-    value: Number
+    title: {
+      type: String,
+      required: true
+    },
+    value: {
+      type: Number,
+      required: true
+    }
   }
 }
 </script>
