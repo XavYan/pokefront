@@ -10,7 +10,7 @@
       alt="pokemon image"
     >
     <div class="pokemon-types">
-      <type
+      <poke-type
         v-for="(type, index) in types"
         :key="index"
         :name="type"
@@ -20,11 +20,11 @@
 </template>
 
 <script>
-import Type from './Type.vue'
+import PokeType from './PokeType.vue'
 
 export default {
   name: 'PokeCard',
-  components: { Type },
+  components: { PokeType },
   props: {
     src: {
       type: String,

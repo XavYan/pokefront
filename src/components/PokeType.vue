@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'Type',
+  name: 'PokeType',
   props: {
     name: {
       type: String,
