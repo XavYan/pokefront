@@ -16,6 +16,7 @@
       </p><p>
         Thanks for using and <i>gotta catch 'em all!</i>
       </p>
+      <h2>Pokédex</h2>
       <poke-pagination
         :offset="0"
         :limit="20"

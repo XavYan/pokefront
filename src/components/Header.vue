@@ -35,20 +35,37 @@ export default {
 <style lang="scss" scoped>
 .header {
   background-color: #264653;
-  height: 50px;
+  min-height: 50px;
   display: flex;
   align-items: center;
   padding: 0 50px;
 
   color: #1D3557;
 
+  @media screen and (max-width: 512px) {
+    flex-direction: column;
+  }
+
   .logo-container {
     text-decoration: none;
+
+    @media screen and (max-width: 512px) {
+      padding: 10px 0;
+    }
   }
 
   #nav {
     width: 100%;
     margin-left: 50px;
+
+    @media screen and (max-width: 512px) {
+      display: flex;
+      width: auto;
+      margin: 0;
+      padding-bottom: 15px;
+      justify-content: center;
+      flex-direction: column;
+    }
 
     :nth-child(n) {
       color: white;
@@ -57,13 +74,26 @@ export default {
       height: 100%;
       font-size: 20px;
       margin: 0 3px;
+      text-align: center;
+
+      @media screen and (max-width: 512px) {
+        margin: 3px 0;
+      }
 
       &:first-child {
         margin-left: 0;
+
+        @media screen and (max-width: 512px) {
+          margin-top: 0;
+        }
       }
 
       &:last-child {
         margin-right: 0;
+
+        @media screen and (max-width: 512px) {
+          margin-bottom: 0;
+        }
       }
 
       &:hover, &.nav-active {

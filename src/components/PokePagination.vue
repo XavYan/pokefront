@@ -164,13 +164,21 @@ export default {
     align-items: center;
     justify-content: space-between;
 
+    @media screen and (max-width: 512px) {
+      flex-direction: column-reverse;
+    }
+
     .pagination-index {
       padding: 20px;
     }
 
-    div:first-of-type {
+    & > div:first-of-type {
       display: flex;
       align-items: center;
+
+      @media screen and (max-width: 512px) {
+        flex-direction: column;
+      }
     }
 
     .pagination-arrows, .pagination-limit {
