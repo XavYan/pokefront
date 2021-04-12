@@ -1,6 +1,6 @@
 <template>
   <div class="footer">
-    <p>Himar Manuel Barquín Carrasco</p>
+    <p>Himar Manuel Barquín Carrasco - A Junior FullStack Web Developer</p>
     <p>Copyright &copy;2021</p>
   </div>
 </template>

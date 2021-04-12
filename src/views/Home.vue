@@ -54,13 +54,13 @@ export default {
 
   a {
     text-decoration: none;
-    color: var(--main-color);
+    color: var(--secondary-color);
     font-style: italic;
     margin-left: 3px;
     margin-right: 5px;
 
     &:hover {
-      border-bottom: 2px solid var(--main-color);
+      border-bottom: 2px solid var(--secondary-color);
     }
   }
 }
