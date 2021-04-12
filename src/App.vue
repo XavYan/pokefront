@@ -1,13 +1,7 @@
 <template>
   <div id="app">
     <Header />
-    <div class="body">
-      <h1>Pokédex</h1>
-      <poke-pagination
-        :offset="0"
-        :limit="20"
-      />
-    </div>
+    <router-view />
     <Footer />
   </div>
 </template>
@@ -15,14 +9,12 @@
 <script>
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
-import PokePagination from './components/PokePagination.vue'
 
 export default {
   name: 'App',
   components: {
     Header,
-    Footer,
-    PokePagination
+    Footer
   }
 }
 </script>
@@ -34,6 +26,9 @@ export default {
   --sm: 512px;
   --md: 768px;
   --lg: 1024px;
+
+  --main-color: #264653;
+  --secondary-color: #F4A261;
 
   --all: #6d6875;
   --normal: rgb(170, 168, 189);
@@ -56,13 +51,6 @@ export default {
   --fairy: rgb(248, 167, 238);
 }
 
-body {
-  margin: 0;
-  background-color: #F8EDEB;
-
-  font-family: 'Noto Sans TC', sans-serif;
-}
-
 #app {
   margin: auto;
   max-width: 1200px;
@@ -70,36 +58,10 @@ body {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
-.body {
-  padding: 0 50px 50px 50px;
-  display: flex;
-  flex-direction: column;
+body {
+  margin: 0;
+  background-color: #F8EDEB;
 
-  & > h1, & > h2 {
-    align-self: flex-start;
-    text-transform: uppercase;
-    margin-bottom: 0;
-
-    @media screen and (max-width: 512px) {
-      align-self: center;
-    }
-  }
-}
-
-.loading::before {
-  content: '';
-  width: 50px;
-  height: 50px;
-  border: 8px solid #EDF6F9;
-  border-radius: 50%;
-  border-left-color: #83C5BE;
-
-  animation: spin .6s linear infinite;
-}
-
-@keyframes spin {
-  100% {
-    transform: rotate(360deg);
-  }
+  font-family: 'Noto Sans TC', sans-serif;
 }
 </style>
