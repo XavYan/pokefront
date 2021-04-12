@@ -15,7 +15,9 @@
       Hi! I'm Himar, a Junior FullStack Web Developer. I love learning new things,
       especially when are related to developing or programming. I also love good practices
       such as SOLID principles, testing and design patterns, and when I'm not doing programmer
-      things I'm playing any playstation or PC game. Those called <i>frikies</i>, that's me!
+      things I'm playing any playstation or PC game.
+      <br>
+      Those called <i>frikies</i>, that's me!
     </p>
     <h2>Check out my social media!</h2>
     <div class="social-media">
