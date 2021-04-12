@@ -1,65 +1,73 @@
 <template>
-  <div class="pagination">
-    <div class="pagination-control">
-      <div>
-        <div class="pagination-arrows">
-          <button
-            type="button"
-            @click="startPage"
-          >
-            <font-awesome-icon :icon="['fas', 'angle-double-left']" />
-          </button>
-          <button
-            type="button"
-            @click="previousPage"
-          >
-            <font-awesome-icon :icon="['fas', 'chevron-left']" />
-          </button>
-          <button
-            type="button"
-            @click="nextPage"
-          >
-            <font-awesome-icon :icon="['fas', 'chevron-right']" />
-          </button>
-          <button
-            type="button"
-            @click="finalPage"
-          >
-            <font-awesome-icon :icon="['fas', 'angle-double-right']" />
-          </button>
+  <div>
+    <div
+      v-if="!isEmpty"
+      class="pagination"
+    >
+      <div class="pagination-control">
+        <div>
+          <div class="pagination-arrows">
+            <button
+              type="button"
+              @click="startPage"
+            >
+              <font-awesome-icon :icon="['fas', 'angle-double-left']" />
+            </button>
+            <button
+              type="button"
+              @click="previousPage"
+            >
+              <font-awesome-icon :icon="['fas', 'chevron-left']" />
+            </button>
+            <button
+              type="button"
+              @click="nextPage"
+            >
+              <font-awesome-icon :icon="['fas', 'chevron-right']" />
+            </button>
+            <button
+              type="button"
+              @click="finalPage"
+            >
+              <font-awesome-icon :icon="['fas', 'angle-double-right']" />
+            </button>
+          </div>
+          <div class="pagination-index">
+            {{ appliedOffset + 1 }} - {{ appliedOffset + appliedLimit }}
+          </div>
         </div>
-        <div class="pagination-index">
-          {{ appliedOffset + 1 }} - {{ appliedOffset + appliedLimit }}
+        <div class="pagination-limit">
+          <button
+            type="button"
+            class="limit-active"
+            @click="setNewActiveLimit"
+          >
+            20
+          </button>
+          <button
+            type="button"
+            @click="setNewActiveLimit"
+          >
+            50
+          </button>
+          <button
+            type="button"
+            @click="setNewActiveLimit"
+          >
+            100
+          </button>
         </div>
       </div>
-      <div class="pagination-limit">
-        <button
-          type="button"
-          class="limit-active"
-          @click="setNewActiveLimit"
-        >
-          20
-        </button>
-        <button
-          type="button"
-          @click="setNewActiveLimit"
-        >
-          50
-        </button>
-        <button
-          type="button"
-          @click="setNewActiveLimit"
-        >
-          100
-        </button>
+      <div class="pokecards">
+        <poke-card
+          v-for="(pokemon, index) in pokemons"
+          :key="index"
+          :src="pokemon"
+        />
       </div>
     </div>
-    <div class="pokecards">
-      <poke-card
-        v-for="(pokemon, index) in pokemons"
-        :key="index"
-        :src="pokemon"
-      />
+    <div v-else>
+      <p>There's no pokémons to show :(</p>
     </div>
   </div>
 </template>
@@ -89,7 +97,8 @@ export default {
       pokemons: [],
       count: 0,
       appliedOffset: 0,
-      appliedLimit: 0
+      appliedLimit: 0,
+      isEmpty: true
     }
   },
   created () {
@@ -105,7 +114,6 @@ export default {
         .then(res => res.json())
     },
     fetchPokemons () {
-      document.querySelector('.pokecards').classList.add('loading')
       this.pokemons = []
       this.fetchAPI(`/pokemon?offset=${this.appliedOffset}&limit=${this.appliedLimit}`)
         .then(res => {
@@ -115,8 +123,8 @@ export default {
         .then(res => res.results.map(pokemon => pokemon.url))
         .then(pokemons => {
           this.pokemons = pokemons
+          this.isEmpty = this.pokemons.length === 0
         })
-      document.querySelector('.pokecards').classList.remove('loading')
     },
     startPage () {
       if (this.appliedOffset !== 0) {
