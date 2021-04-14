@@ -1,5 +1,8 @@
 <template>
-  <div class="header">
+  <div
+    role="header"
+    class="header"
+  >
     <router-link
       class="logo-container"
       to="/"
@@ -24,7 +27,7 @@
 </template>
 
 <script>
-import PokefrontLogo from './PokefrontLogo.vue'
+import PokefrontLogo from '../PokefrontLogo.vue'
 
 export default {
   name: 'Header',
