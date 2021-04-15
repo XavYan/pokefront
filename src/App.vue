@@ -64,4 +64,21 @@ body {
 
   font-family: 'Noto Sans TC', sans-serif;
 }
+
+.loading::before {
+  content: '';
+  width: 50px;
+  height: 50px;
+  border: 8px solid #EDF6F9;
+  border-radius: 50%;
+  border-left-color: #83C5BE;
+
+  animation: spin .6s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
 </style>

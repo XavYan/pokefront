@@ -60,9 +60,11 @@
       </div>
       <div class="pokecards">
         <poke-card
-          v-for="(pokemon, index) in pokemons"
-          :key="index"
-          :src="pokemon"
+          v-for="pokemon in appliedList"
+          :id="pokemon.id"
+          :key="pokemon.id"
+          :name="pokemon.name"
+          :src="pokemon.url"
         />
       </div>
     </div>
@@ -75,14 +77,16 @@
 <script>
 import PokeCard from './PokeCard.vue'
 
-const API_PATH = 'https://pokeapi.co/api/v2'
-
 export default {
   name: 'PokePagination',
   components: {
     PokeCard
   },
   props: {
+    list: {
+      type: Array,
+      required: true
+    },
     offset: {
       type: Number,
       default: 0
@@ -94,11 +98,22 @@ export default {
   },
   data () {
     return {
-      pokemons: [],
-      count: 0,
+      appliedList: [],
       appliedOffset: 0,
       appliedLimit: 0,
       isEmpty: true
+    }
+  },
+  watch: {
+    appliedOffset () {
+      this.setAppliedList()
+    },
+    appliedLimit () {
+      this.setAppliedList()
+    },
+    list () {
+      this.isEmpty = this.list.length === 0
+      this.setAppliedList()
     }
   },
   created () {
@@ -106,50 +121,32 @@ export default {
     this.appliedLimit = this.limit
   },
   mounted () {
-    this.fetchPokemons()
+    this.isEmpty = this.list.length === 0
   },
   methods: {
-    fetchAPI (endpoint) {
-      return fetch(API_PATH + endpoint)
-        .then(res => res.json())
-    },
-    fetchPokemons () {
-      this.pokemons = []
-      this.fetchAPI(`/pokemon?offset=${this.appliedOffset}&limit=${this.appliedLimit}`)
-        .then(res => {
-          this.count = res.count
-          return res
-        })
-        .then(res => res.results.map(pokemon => pokemon.url))
-        .then(pokemons => {
-          this.pokemons = pokemons
-          this.isEmpty = this.pokemons.length === 0
-        })
+    setAppliedList () {
+      this.appliedList = this.list.slice(this.appliedOffset, this.appliedOffset + this.appliedLimit)
     },
     startPage () {
       if (this.appliedOffset !== 0) {
         this.appliedOffset = 0
-        this.fetchPokemons()
       }
     },
     nextPage () {
-      if (this.appliedOffset < this.count) {
+      if (this.appliedOffset < this.list.length) {
         this.appliedOffset += this.appliedLimit
-        if (this.appliedOffset > this.count) this.appliedOffset = this.count
-        this.fetchPokemons()
+        if (this.appliedOffset > this.list.length) this.appliedOffset = this.list.length
       }
     },
     previousPage () {
       if (this.appliedOffset > 0) {
         this.appliedOffset -= this.appliedLimit
         if (this.appliedOffset < 0) this.appliedOffset = 0
-        this.fetchPokemons()
       }
     },
     finalPage () {
-      if (this.appliedOffset !== (this.count - this.appliedLimit)) {
-        this.appliedOffset = this.count - this.appliedLimit
-        this.fetchPokemons()
+      if (this.appliedOffset !== (this.list.length - this.appliedLimit)) {
+        this.appliedOffset = this.list.length - this.appliedLimit
       }
     },
     setNewActiveLimit (event) {
@@ -157,7 +154,6 @@ export default {
         this.appliedLimit = parseInt(event.target.textContent)
         document.querySelector('.limit-active').classList.remove('limit-active')
         event.target.classList.add('limit-active')
-        this.fetchPokemons()
       }
     }
   }

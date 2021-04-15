@@ -18,6 +18,7 @@
       </p>
       <h2>Pokédex</h2>
       <poke-pagination
+        :list="pokemons"
         :offset="0"
         :limit="20"
       />
@@ -28,10 +29,40 @@
 <script>
 import PokePagination from '../components/PokePagination.vue'
 
+const API_PATH = 'https://pokeapi.co/api/v2'
+
 export default {
   name: 'Home',
   components: {
     PokePagination
+  },
+  data () {
+    return {
+      pokemons: []
+    }
+  },
+  created () {
+    this.fetchPokemons()
+  },
+  methods: {
+    fetchAPI (endpoint) {
+      return fetch(API_PATH + endpoint)
+        .then(res => res.json())
+    },
+    fetchPokemons () {
+      this.pokemons = []
+      this.fetchAPI('/pokedex/national')
+        .then(res => {
+          this.pokemons = res.pokemon_entries.map(entry => {
+            return {
+              url: API_PATH + '/pokemon/' + entry.entry_number,
+              name: entry.pokemon_species.name,
+              id: entry.entry_number
+            }
+          })
+          console.log(this.pokemons)
+        })
+    }
   }
 }
 </script>
@@ -62,23 +93,6 @@ export default {
     &:hover {
       border-bottom: 2px solid var(--secondary-color);
     }
-  }
-}
-
-.loading::before {
-  content: '';
-  width: 50px;
-  height: 50px;
-  border: 8px solid #EDF6F9;
-  border-radius: 50%;
-  border-left-color: #83C5BE;
-
-  animation: spin .6s linear infinite;
-}
-
-@keyframes spin {
-  100% {
-    transform: rotate(360deg);
   }
 }
 </style>
