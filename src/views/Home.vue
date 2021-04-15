@@ -60,7 +60,6 @@ export default {
               id: entry.entry_number
             }
           })
-          console.log(this.pokemons)
         })
     }
   }
