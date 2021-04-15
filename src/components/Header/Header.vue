@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import PokefrontLogo from '../PokefrontLogo.vue'
+import PokefrontLogo from '../PokefrontLogo/PokefrontLogo.vue'
 
 export default {
   name: 'Header',
