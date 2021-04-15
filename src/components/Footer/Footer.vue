@@ -1,5 +1,8 @@
 <template>
-  <div class="footer">
+  <div
+    role="footer"
+    class="footer"
+  >
     <p>Himar Manuel Barquín Carrasco - A Junior FullStack Web Developer</p>
     <p>Copyright &copy;2021</p>
   </div>

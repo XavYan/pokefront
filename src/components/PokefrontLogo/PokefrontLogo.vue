@@ -1,5 +1,8 @@
 <template>
-  <p class="title">
+  <p
+    role="logo"
+    class="title"
+  >
     <i>Poké</i><span>Front</span>
   </p>
 </template>

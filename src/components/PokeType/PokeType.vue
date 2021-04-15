@@ -1,5 +1,8 @@
 <template>
-  <p class="type">
+  <p
+    role="poke-type"
+    class="type"
+  >
     {{ name }}
   </p>
 </template>

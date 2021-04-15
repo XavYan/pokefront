@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import Header from './components/Header.vue'
-import Footer from './components/Footer.vue'
+import Header from './components/Header/Header.vue'
+import Footer from './components/Footer/Footer.vue'
 
 export default {
   name: 'App',
@@ -63,5 +63,22 @@ body {
   background-color: #F8EDEB;
 
   font-family: 'Noto Sans TC', sans-serif;
+}
+
+.loading::before {
+  content: '';
+  width: 50px;
+  height: 50px;
+  border: 8px solid #EDF6F9;
+  border-radius: 50%;
+  border-left-color: #83C5BE;
+
+  animation: spin .6s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>

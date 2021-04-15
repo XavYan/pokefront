@@ -1,31 +1,50 @@
 <template>
-  <div class="container">
-    <strong class="pokemon-id">#{{ id }}</strong>
-    <h2 class="pokemon-name">
-      {{ name }}
-    </h2>
-    <img
-      class="pokemon-image"
-      :src="image"
-      alt="pokemon image"
+  <div
+    :id="`pokemon${id}`"
+    class="container"
+  >
+    <div
+      v-if="types && image"
     >
-    <div class="pokemon-types">
-      <poke-type
-        v-for="(type, index) in types"
-        :key="index"
-        :name="type"
-      />
+      <strong class="pokemon-id">#{{ id }}</strong>
+      <h2 class="pokemon-name">
+        {{ appliedName }}
+      </h2>
+      <img
+        v-if="image"
+        class="pokemon-image"
+        :src="image"
+        alt="pokemon image"
+      >
+      <div
+        v-if="types"
+        class="pokemon-types"
+      >
+        <poke-type
+          v-for="(type, index) in types"
+          :key="index"
+          :name="type"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import PokeType from './PokeType.vue'
+import PokeType from './PokeType/PokeType.vue'
 
 export default {
   name: 'PokeCard',
   components: { PokeType },
   props: {
+    id: {
+      type: Number,
+      default: 0
+    },
+    name: {
+      type: String,
+      default: ''
+    },
     src: {
       type: String,
       required: true
@@ -33,18 +52,18 @@ export default {
   },
   data () {
     return {
-      id: 0,
-      name: '',
       image: '',
+      appliedName: '',
       types: []
     }
   },
-  async created () {
+  async mounted () {
+    document.querySelector(`#pokemon${this.id}`).classList.add('loading')
     const data = await this.fetchUrl()
-    this.id = data.id
-    this.name = data.name
+    this.appliedName = this.name !== '' ? this.name : data.name
     this.image = data.sprites.front_default
     this.types = data.types.map(slot => slot.type.name)
+    document.querySelector(`#pokemon${this.id}`).classList.remove('loading')
   },
   methods: {
     fetchUrl () {
@@ -56,7 +75,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .container {
+  .container, .container > div {
     background-color: white;
 
     border-radius: 5%;
