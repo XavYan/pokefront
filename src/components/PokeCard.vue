@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import PokeType from './PokeType.vue'
+import PokeType from './PokeType/PokeType.vue'
 
 export default {
   name: 'PokeCard',
