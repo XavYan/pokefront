@@ -8,7 +8,7 @@
     >
       <strong class="pokemon-id">#{{ id }}</strong>
       <h2 class="pokemon-name">
-        {{ name }}
+        {{ appliedName }}
       </h2>
       <img
         v-if="image"
@@ -53,16 +53,14 @@ export default {
   data () {
     return {
       image: '',
+      appliedName: '',
       types: []
     }
   },
   async mounted () {
     document.querySelector(`#pokemon${this.id}`).classList.add('loading')
-    // console.log(document.querySelector(`#pokemon${this.id}`))
     const data = await this.fetchUrl()
-    if (this.name === '') {
-      this.name = data.name
-    }
+    this.appliedName = this.name !== '' ? this.name : data.name
     this.image = data.sprites.front_default
     this.types = data.types.map(slot => slot.type.name)
     document.querySelector(`#pokemon${this.id}`).classList.remove('loading')
