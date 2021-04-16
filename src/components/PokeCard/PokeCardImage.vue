@@ -3,7 +3,7 @@
     v-if="image"
     class="pokemon-image"
     :src="image"
-    alt="pokemon image"
+    :alt="alt"
   >
 </template>
 
@@ -14,6 +14,10 @@ export default {
     image: {
       type: String,
       required: true
+    },
+    alt: {
+      type: String,
+      default: 'pokemon image'
     }
   }
 }

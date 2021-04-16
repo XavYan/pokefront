@@ -8,7 +8,10 @@
     >
       <poke-card-id :id="id" />
       <poke-card-name :name="appliedName" />
-      <poke-card-image :image="image" />
+      <poke-card-image
+        :image="image"
+        :alt="`${appliedName} image`"
+      />
       <poke-card-types :types="types" />
     </div>
   </div>
