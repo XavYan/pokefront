@@ -25,7 +25,12 @@ import PokeCardTypes from './PokeCardTypes.vue'
 
 export default {
   name: 'PokeCard',
-  components: { PokeCardName, PokeCardId, PokeCardImage, PokeCardTypes },
+  components: {
+    PokeCardName,
+    PokeCardId,
+    PokeCardImage,
+    PokeCardTypes
+  },
   props: {
     id: {
       type: Number,
@@ -44,16 +49,23 @@ export default {
     return {
       image: '',
       appliedName: '',
-      types: []
+      types: [],
+      isUnkown: false
     }
   },
   async mounted () {
-    document.querySelector(`#pokemon${this.id}`).classList.add('loading')
-    const data = await this.fetchUrl()
-    this.appliedName = this.name !== '' ? this.name : data.name
-    this.image = data.sprites.front_default
-    this.types = data.types.map(slot => slot.type.name)
-    document.querySelector(`#pokemon${this.id}`).classList.remove('loading')
+    try {
+      document.querySelector(`#pokemon${this.id}`).classList.add('loading')
+      const data = await this.fetchUrl()
+      this.appliedName = this.name !== '' ? this.name : data.name
+      this.image = data.sprites.front_default
+      this.types = data.types.map(slot => slot.type.name)
+      document.querySelector(`#pokemon${this.id}`).classList.remove('loading')
+    } catch (error) {
+      this.appliedName = '????'
+      this.image = require('../../assets/yamask_hidden.png')
+      this.types = ['??', '??']
+    }
   },
   methods: {
     fetchUrl () {
