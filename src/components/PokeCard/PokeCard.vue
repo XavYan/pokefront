@@ -6,36 +6,23 @@
     <div
       v-if="types && image"
     >
-      <strong class="pokemon-id">#{{ id }}</strong>
-      <h2 class="pokemon-name">
-        {{ appliedName }}
-      </h2>
-      <img
-        v-if="image"
-        class="pokemon-image"
-        :src="image"
-        alt="pokemon image"
-      >
-      <div
-        v-if="types"
-        class="pokemon-types"
-      >
-        <poke-type
-          v-for="(type, index) in types"
-          :key="index"
-          :name="type"
-        />
-      </div>
+      <poke-card-id :id="id" />
+      <poke-card-name :name="appliedName" />
+      <poke-card-image :image="image" />
+      <poke-card-types :types="types" />
     </div>
   </div>
 </template>
 
 <script>
-import PokeType from './PokeType/PokeType.vue'
+import PokeCardId from './PokeCardId.vue'
+import PokeCardImage from './PokeCardImage.vue'
+import PokeCardName from './PokeCardName.vue'
+import PokeCardTypes from './PokeCardTypes.vue'
 
 export default {
   name: 'PokeCard',
-  components: { PokeType },
+  components: { PokeCardName, PokeCardId, PokeCardImage, PokeCardTypes },
   props: {
     id: {
       type: Number,
@@ -95,25 +82,6 @@ export default {
 
   .container:hover {
     transform: translateY(-10px);
-  }
-
-  .pokemon-id {
-    color: #B7B7A4;
-    width: 100%;
-    padding-left: 30px;
-    padding-top: 5px;
-    font-size: 10px;
-  }
-
-  .pokemon-name {
-    margin-top: 0;
-    font-weight: 400;
-    text-transform: capitalize;
-  }
-
-  .pokemon-image {
-    width: 150px;
-    height: 150px;
   }
 
   .pokemon-types {

@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import PokeCard from './PokeCard.vue'
+import PokeCard from './PokeCard/PokeCard.vue'
 
 export default {
   name: 'PokePagination',
