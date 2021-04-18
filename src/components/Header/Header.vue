@@ -10,18 +10,11 @@
       <pokefront-logo />
     </router-link>
     <div id="nav">
-      <!-- <router-link
-        v-for="(link, index) in links"
-        :key="index"
-        :to="link.to"
-      >
-        {{ link.name }}
-      </router-link> -->
       <conditional-router-link
         v-for="(link, index) in links"
         :key="index"
-        :to="link.to"
-        :enabled="link.enabled"
+        :to="link.path"
+        :enabled="link.name !== 'Home'"
       >
         {{ link.name }}
       </conditional-router-link>
@@ -32,6 +25,7 @@
 <script>
 import ConditionalRouterLink from '../ConditionalRouterLink.vue'
 import PokefrontLogo from '../PokefrontLogo/PokefrontLogo.vue'
+import { routes } from '../../router'
 
 export default {
   name: 'Header',
@@ -41,10 +35,7 @@ export default {
   },
   data () {
     return {
-      links: [
-        { to: '/search', name: 'Search', enabled: false },
-        { to: '/about', name: 'About', enabled: true }
-      ]
+      links: [...routes].sort((a, b) => a.order < b.order ? -1 : 0)
     }
   }
 }
