@@ -7,13 +7,18 @@
           href="https://pokeapi.co"
           target="_blank"
         >PokéAPI</a> to provide information about Pokémons and the world around them!
-      </p><p>
-        You have all pokémons provided by this API below, sorted by IDs. To look for a
-        specific pokémon, please refer to
-        <router-link to="/search">
-          Search
-        </router-link> page.
-      </p><p>
+      </p>
+      <p>
+        You have all pokémons provided by this API below, sorted by IDs.
+        <span v-if="false">
+          To look for a
+          specific pokémon, please refer to
+          <router-link to="/search">
+            Search
+          </router-link> page.
+        </span>
+      </p>
+      <p>
         Thanks for using and <i>gotta catch 'em all!</i>
       </p>
       <h2>Pokédex</h2>
