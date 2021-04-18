@@ -29,6 +29,7 @@ export default {
   font-size: 10px;
   border-radius: 10px;
   color: white;
+  background-color: #68998C;
 }
 
 .water {

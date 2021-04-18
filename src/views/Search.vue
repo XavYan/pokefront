@@ -8,12 +8,20 @@
     <p>
       We're sorry for the inconvenience. Please, don't hate us :'(
     </p>
+    <h2>Filters</h2>
+    <div class="filters">
+      This is the filter zone.. empty yet.
+    </div>
+    <h2>Results</h2>
+    <poke-pagination />
   </div>
 </template>
 
 <script>
+import PokePagination from '../components/PokePagination.vue'
 export default {
-  name: 'Search'
+  name: 'Search',
+  components: { PokePagination }
 }
 </script>
 

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Search from '../views/Search.vue'
+import view404 from '../views/404.vue'
 
 Vue.use(VueRouter)
 
@@ -22,7 +23,12 @@ const routes = [
   {
     path: '/search',
     name: 'Search',
-    component: Search
+    component: Search,
+    redirect: '/404'
+  },
+  {
+    path: '*',
+    component: view404
   }
 ]
 

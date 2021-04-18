@@ -10,28 +10,43 @@
       <pokefront-logo />
     </router-link>
     <div id="nav">
-      <router-link
-        to="/search"
-        active-class="nav-active"
+      <!-- <router-link
+        v-for="(link, index) in links"
+        :key="index"
+        :to="link.to"
       >
-        Search
-      </router-link>
-      <router-link
-        to="/about"
-        active-class="nav-active"
+        {{ link.name }}
+      </router-link> -->
+      <conditional-router-link
+        v-for="(link, index) in links"
+        :key="index"
+        :to="link.to"
+        :enabled="link.enabled"
       >
-        About
-      </router-link>
+        {{ link.name }}
+      </conditional-router-link>
     </div>
   </div>
 </template>
 
 <script>
+import ConditionalRouterLink from '../ConditionalRouterLink.vue'
 import PokefrontLogo from '../PokefrontLogo/PokefrontLogo.vue'
 
 export default {
   name: 'Header',
-  components: { PokefrontLogo }
+  components: {
+    PokefrontLogo,
+    ConditionalRouterLink
+  },
+  data () {
+    return {
+      links: [
+        { to: '/search', name: 'Search', enabled: false },
+        { to: '/about', name: 'About', enabled: true }
+      ]
+    }
+  }
 }
 </script>
 
@@ -99,7 +114,7 @@ export default {
         }
       }
 
-      &:hover, &.nav-active {
+      &:hover, &.router-link-active {
         color: #F4A261;
         // border-bottom: 2px solid #F4A261;
       }
