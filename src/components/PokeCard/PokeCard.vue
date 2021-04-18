@@ -1,6 +1,6 @@
 <template>
   <div
-    :id="`pokemon${id}`"
+    :id="`pokemon${index}`"
     class="container"
   >
     <div
@@ -36,6 +36,10 @@ export default {
       type: Number,
       default: 0
     },
+    index: {
+      type: Number,
+      required: true
+    },
     name: {
       type: String,
       default: ''
@@ -49,19 +53,21 @@ export default {
     return {
       image: '',
       appliedName: '',
+      appliedIndex: 0,
       types: [],
       isUnkown: false
     }
   },
   async mounted () {
     try {
-      document.querySelector(`#pokemon${this.id}`).classList.add('loading')
+      document.querySelector(`#pokemon${this.index}`).classList.add('loading')
       const data = await this.fetchUrl()
       this.appliedName = this.name !== '' ? this.name : data.name
       this.image = data.sprites.front_default
       this.types = data.types.map(slot => slot.type.name)
-      document.querySelector(`#pokemon${this.id}`).classList.remove('loading')
+      document.querySelector(`#pokemon${this.index}`).classList.remove('loading')
     } catch (error) {
+      console.log(error)
       this.appliedName = '????'
       this.image = require('../../assets/yamask_hidden.png')
       this.types = ['??', '??']

@@ -63,6 +63,7 @@
           v-for="pokemon in appliedList"
           :id="pokemon.id"
           :key="pokemon.id"
+          :index="pokemon.index"
           :name="pokemon.name"
           :src="pokemon.url"
         />
@@ -115,6 +116,9 @@ export default {
       this.isEmpty = this.list.length === 0
       this.setAppliedList()
     }
+  },
+  updated () {
+    console.log('actualizado!')
   },
   created () {
     this.appliedOffset = this.offset
